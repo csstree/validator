@@ -1,3 +1,5 @@
+[![NPM version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
+
 # CSS Tree Validator
 
 ## How to use:
