@@ -26,5 +26,7 @@ Options:
 var validate = require('csstree-validator').validate;
 var reporter = require('csstree-validator').reporters.checkstyle;
 
-console.log(reporter(validate(['/path/to/style.css'])));
+console.log(reporter(validate.byPaths(['/path/to/style.css'])));
+// or
+console.log(reporter(validate.byContent('<some raw css>')));
 ```
