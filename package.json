@@ -1,0 +1,46 @@
+{
+  "name": "csstree-validator",
+  "version": "1.0.0",
+  "description": "CSS validator build on csstree",
+  "keywords": [
+    "css",
+    "syntax",
+    "validator",
+    "checker"
+  ],
+  "homepage": "https://github.com/csstree/validator",
+  "author": "Roman Dvornov <rdvornov@gmail.com>",
+  "license": "MIT",
+  "repository": "csstree/validator",
+  "bugs": {
+    "url": "https://github.com/csstree/validator/issues"
+  },
+  "bin": {
+    "csstree-validator": "./bin/validate"
+  },
+  "main": "./lib/index",
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "mocha": true,
+      "es6": true
+    },
+    "rules": {
+      "no-duplicate-case": 2,
+      "no-undef": 2,
+      "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+    }
+  },
+  "scripts": {
+
+  },
+  "dependencies": {
+    "clap": "^1.1.1",
+    "css-tree": "~1.0.0-alpha"
+  },
+  "devDependencies": {
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
