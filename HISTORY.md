@@ -1,3 +1,7 @@
+## 1.0.6 (December 23, 2016)
+
+- Updated `csstree` to `1.0.0-alpha9`
+
 ## 1.0.5 (November 11, 2016)
 
 - Updated `csstree` to `1.0.0-alpha8`
