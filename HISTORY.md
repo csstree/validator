@@ -1,3 +1,9 @@
+## 1.0.8 (January 19, 2017)
+
+- Added `loc` to mismatch errors when possible
+- Fixed wrong `source` in node `loc`
+- Updated `csstree` to `1.0.0-alpha13`
+
 ## 1.0.7 (January 19, 2017)
 
 - Updated `csstree` to `1.0.0-alpha12`
