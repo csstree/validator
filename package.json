@@ -28,17 +28,25 @@
     "rules": {
       "no-duplicate-case": 2,
       "no-undef": 2,
-      "no-unused-vars": [2, {"vars": "all", "args": "after-used"}]
+      "no-unused-vars": [
+        2,
+        {
+          "vars": "all",
+          "args": "after-used"
+        }
+      ]
     }
   },
   "scripts": {
-
+    "codestyle": "jscs lib && eslint lib"
   },
   "dependencies": {
     "clap": "^1.1.1",
     "css-tree": "1.0.0-alpha12"
   },
   "devDependencies": {
+    "eslint": "^3.13.1",
+    "jscs": "^3.0.7"
   },
   "engines": {
     "node": ">=0.10.0"
