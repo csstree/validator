@@ -1,4 +1,6 @@
 [![NPM version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
+[![Build Status](https://travis-ci.org/csstree/csstree-validator.svg?branch=master)](https://travis-ci.org/csstree/csstree-validator)
+
 
 # CSS Tree Validator
 

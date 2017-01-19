@@ -40,7 +40,8 @@
   "scripts": {
     "codestyle-and-test": "npm run codestyle && npm test",
     "codestyle": "jscs lib && eslint lib",
-    "test": "mocha --reporter dot"
+    "test": "mocha --reporter dot",
+    "travis": "npm run codestyle-and-test"
   },
   "dependencies": {
     "clap": "^1.1.1",
