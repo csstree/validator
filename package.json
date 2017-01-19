@@ -38,7 +38,9 @@
     }
   },
   "scripts": {
-    "codestyle": "jscs lib && eslint lib"
+    "codestyle-and-test": "npm run codestyle && npm test",
+    "codestyle": "jscs lib && eslint lib",
+    "test": "mocha --reporter dot"
   },
   "dependencies": {
     "clap": "^1.1.1",
@@ -46,7 +48,8 @@
   },
   "devDependencies": {
     "eslint": "^3.13.1",
-    "jscs": "^3.0.7"
+    "jscs": "^3.0.7",
+    "mocha": "^3.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
