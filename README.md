@@ -27,7 +27,7 @@ Options:
 ## API
 
 ```js
-var validate = require('csstree-validator').validateFile;
+var validateFile = require('csstree-validator').validateFile;
 var reporter = require('csstree-validator').reporters.checkstyle;
 
 console.log(reporter(validateFile('/path/to/style.css')));
