@@ -1,24 +1,17 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var validateString = require('../lib/validate').validateString;
+var validateDictionary = require('../lib/validate').validateDictionary;
 var reporters = require('../lib/reporter');
 var input = {
-    parse: 'foo { boom! }',
-    match: '.warn { color: 123; border: 1px unknown red; unknown: yep; --custom: property }'
+    'parse.css': 'foo { boom! }',
+    'match.css': '.warn { color: 123; border: 1px unknown red; unknown: yep; --custom: property }'
 };
 
 function createReporterTest(name, reporter) {
-    it(name + ' parse errors', function() {
-        var expected = fs.readFileSync(path.join(__dirname, 'fixture/reporter/' + name + '.parse'), 'utf8').trim();
-        var actual = reporter(validateString(input.parse, 'test')).trim();
-
-        assert.equal(actual, expected);
-    });
-
-    it(name + ' match errors', function() {
-        var expected = fs.readFileSync(path.join(__dirname, 'fixture/reporter/' + name + '.match'), 'utf8').trim();
-        var actual = reporter(validateString(input.match, 'test')).trim();
+    it(name, function() {
+        var expected = fs.readFileSync(path.join(__dirname, 'fixture/reporter/' + name), 'utf8').trim();
+        var actual = reporter(validateDictionary(input)).trim();
 
         assert.equal(actual, expected);
     });

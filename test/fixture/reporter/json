@@ -1,6 +1,6 @@
 [
     {
-        "name": "test",
+        "name": "match.css",
         "line": 1,
         "column": 16,
         "property": "color",
@@ -8,7 +8,7 @@
         "details": "Mismatch\n  syntax: <color>\n   value: 123\n  --------^"
     },
     {
-        "name": "test",
+        "name": "match.css",
         "line": 1,
         "column": 33,
         "property": "border",
@@ -16,11 +16,18 @@
         "details": "Uncomplete match\n  syntax: <br-width> || <br-style> || <color>\n   value: 1px unknown red\n  ------------^"
     },
     {
-        "name": "test",
+        "name": "match.css",
         "line": 1,
         "column": 46,
         "property": "unknown",
         "message": "Unknown property: unknown",
         "details": "Unknown property: unknown"
+    },
+    {
+        "name": "parse.css",
+        "line": 1,
+        "column": 11,
+        "message": "Colon is expected",
+        "details": null
     }
 ]

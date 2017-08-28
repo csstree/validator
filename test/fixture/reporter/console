@@ -1,4 +1,4 @@
-# test
+# match.css
     * Invalid value for `color`
       syntax: <color>
        value: 123
@@ -8,3 +8,6 @@
        value: 1px unknown red
       ------------^
     * Unknown property: unknown
+
+# parse.css
+    [ERROR] CssSyntaxError: Colon is expected

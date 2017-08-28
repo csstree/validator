@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<checkstyle version="4.3">
-	<file name="test">
-		<error line="1" column="11" severity="error" message="Colon is expected" source="csstree-validator"/>
-	</file>
-</checkstyle>
