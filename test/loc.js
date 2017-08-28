@@ -72,4 +72,10 @@ describe('locations', function() {
             }
         });
     });
+
+    it('should not warn on custom properties', function() {
+        var error = validateString('.broken { --foo: 123 }', 'test').test;
+
+        assert.deepEqual(error, []);
+    });
 });
