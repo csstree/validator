@@ -1,3 +1,12 @@
+## 1.1.0 (August 28, 2017)
+
+- Updated csstree to [1.0.0-alpha20](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha20)
+- Changed validate function to always contain a list of errors (no single error on parse error)
+- Added `validateDictionary()` that validate a dictionary, where key is a filename and value is a CSS as string
+- Changed `validateFile()`, `validatePath()` and `validatePathList()` to handle possible file system exceptions (such errors will be stored as regular errors)
+- Added second argument for `validatePath()` and `validatePathList()` to rule which file should be validated. Functions validate files with `.css` extension only, when second parameter is not passed.
+- Fixed minor issues in reporters output
+
 ## 1.0.8 (January 19, 2017)
 
 - Added `loc` to mismatch errors when possible
