@@ -3,7 +3,7 @@ var validateString = require('../lib/validate').validateString;
 
 describe('locations', function() {
     it('result should contain correct parse error location', function() {
-        var error = validateString('.broken {\n  a;\n}', 'test').test;
+        var error = validateString('.broken {\n  a;\n}', 'test').test[0];
 
         assert.equal(error.line, 2, 'line');
         assert.equal(error.column, 4, 'column');
