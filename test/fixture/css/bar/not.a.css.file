@@ -1,3 +1,4 @@
 test {
+    unknown: 1;
     color: bad;
 }

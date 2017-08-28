@@ -70,6 +70,23 @@ describe('validate functions', function() {
             });
         });
 
+        it('should validate all files that match shouldBeValidated on path', function() {
+            var errors = fn.validatePath(fixturePath, function(filename) {
+                return path.basename(filename) === 'not.a.css.file';
+            });
+
+            assert.deepEqual(Object.keys(errors).map(function(filename) {
+                return path.relative(fixturePath, filename);
+            }).sort(), ['bar/not.a.css.file']);
+
+            Object.keys(errors).forEach(function(filename) {
+                assert.equal(errors[filename].length, 2);
+                assert.deepEqual(errors[filename].map(function(error) {
+                    return error.name;
+                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            });
+        });
+
         it('should not fail when path is invalid', function() {
             var path = Math.random();
             var errors = fn.validatePath(path);
@@ -90,6 +107,26 @@ describe('validate functions', function() {
             assert.deepEqual(Object.keys(errors).map(function(filename) {
                 return path.relative(fixturePath, filename);
             }).sort(), ['bar/style.css', 'foo/style.css']);
+
+            Object.keys(errors).forEach(function(filename) {
+                assert.equal(errors[filename].length, 2);
+                assert.deepEqual(errors[filename].map(function(error) {
+                    return error.name;
+                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            });
+        });
+
+        it('should validate all files that match shouldBeValidated on path', function() {
+            var errors = fn.validatePathList([
+                path.join(fixturePath, 'bar'),
+                path.join(fixturePath, 'foo')
+            ], function(filename) {
+                return path.basename(filename) === 'not.a.css.file';
+            });
+
+            assert.deepEqual(Object.keys(errors).map(function(filename) {
+                return path.relative(fixturePath, filename);
+            }).sort(), ['bar/not.a.css.file']);
 
             Object.keys(errors).forEach(function(filename) {
                 assert.equal(errors[filename].length, 2);
