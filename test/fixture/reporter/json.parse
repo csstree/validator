@@ -1,0 +1,9 @@
+[
+    {
+        "name": "test",
+        "line": 1,
+        "column": 11,
+        "message": "Colon is expected",
+        "details": null
+    }
+]

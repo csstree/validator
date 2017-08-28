@@ -1,0 +1,26 @@
+[
+    {
+        "name": "test",
+        "line": 1,
+        "column": 16,
+        "property": "color",
+        "message": "Invalid value for `color`",
+        "details": "Mismatch\n  syntax: <color>\n   value: 123\n  --------^"
+    },
+    {
+        "name": "test",
+        "line": 1,
+        "column": 33,
+        "property": "border",
+        "message": "The rest part of value can't to be matched on `border` syntax",
+        "details": "Uncomplete match\n  syntax: <br-width> || <br-style> || <color>\n   value: 1px unknown red\n  ------------^"
+    },
+    {
+        "name": "test",
+        "line": 1,
+        "column": 46,
+        "property": "unknown",
+        "message": "Unknown property: unknown",
+        "details": "Unknown property: unknown"
+    }
+]
