@@ -11,3 +11,7 @@
 
 # parse.css
     [ERROR] CssSyntaxError: Colon is expected
+    * The rest part of value can't to be matched on `color` syntax
+      syntax: <color>
+       value: red green
+      ------------^
