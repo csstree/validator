@@ -7,7 +7,7 @@
       syntax: <br-width> || <br-style> || <color>
        value: 1px unknown red
       ------------^
-    * Unknown property: unknown
+    * Unknown property `unknown`
 
 # parse.css
     [ERROR] CssSyntaxError: Colon is expected

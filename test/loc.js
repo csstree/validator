@@ -13,7 +13,7 @@ describe('locations', function() {
     it('result should contain correct location of unknown property', function() {
         var error = validateString('.broken {\n  abc: 1;\n}', 'test').test[0];
 
-        assert.equal(error.message, 'Unknown property: abc');
+        assert.equal(error.message, 'Unknown property `abc`');
         assert.equal(error.line, 2);
         assert.equal(error.column, 3);
         assert.deepEqual(error.loc, {

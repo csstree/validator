@@ -20,8 +20,8 @@
         "line": 1,
         "column": 46,
         "property": "unknown",
-        "message": "Unknown property: unknown",
-        "details": "Unknown property: unknown"
+        "message": "Unknown property `unknown`",
+        "details": null
     },
     {
         "name": "parse.css",
