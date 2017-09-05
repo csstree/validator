@@ -1,3 +1,8 @@
+## 1.2.0 (September 4, 2017)
+
+- Updated csstree to [1.0.0-alpha21](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha21)
+- Use tolerant mode to parse a CSS. Since now a aingle parse error doesn't prevent from validation of a whole CSS.
+
 ## 1.1.0 (August 28, 2017)
 
 - Updated csstree to [1.0.0-alpha20](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha20)
