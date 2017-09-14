@@ -55,7 +55,7 @@ describe('locations', function() {
     it('result should contain correct location of uncomplete mismatch', function() {
         var error = validateString('.broken {\n  border: red 1xx solid;\n}', 'test').test[0];
 
-        assert.equal(error.message, 'The rest part of value can\'t be matched to `border` grammar');
+        assert.equal(error.message, 'The rest part of value can\'t be matched to `border` syntax');
         assert.equal(error.line, 2);
         assert.equal(error.column, 15);
         assert.deepEqual(error.loc, {

@@ -2,11 +2,11 @@
 <checkstyle version="4.3">
 	<file name="match.css">
 		<error line="1" column="16" severity="error" message="Invalid value for `color`" source="csstree-validator"/>
-		<error line="1" column="33" severity="error" message="The rest part of value can't be matched to `border` grammar" source="csstree-validator"/>
+		<error line="1" column="33" severity="error" message="The rest part of value can't be matched to `border` syntax" source="csstree-validator"/>
 		<error line="1" column="46" severity="error" message="Unknown property `unknown`" source="csstree-validator"/>
 	</file>
 	<file name="parse.css">
 		<error line="1" column="11" severity="error" message="Colon is expected" source="csstree-validator"/>
-		<error line="1" column="32" severity="error" message="The rest part of value can't be matched to `color` grammar" source="csstree-validator"/>
+		<error line="1" column="32" severity="error" message="The rest part of value can't be matched to `color` syntax" source="csstree-validator"/>
 	</file>
 </checkstyle>
