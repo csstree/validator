@@ -1,11 +1,15 @@
+## 1.2.1 (September 14, 2017)
+
+- Updated `csstree` to 1.0.0-alpha24 (minor bug fixes)
+
 ## 1.2.0 (September 4, 2017)
 
-- Updated csstree to [1.0.0-alpha21](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha21)
+- Updated `csstree` to [1.0.0-alpha21](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha21)
 - Use tolerant mode to parse a CSS. Since now a single parse error doesn't prevent validation of a whole CSS.
 
 ## 1.1.0 (August 28, 2017)
 
-- Updated csstree to [1.0.0-alpha20](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha20)
+- Updated `csstree` to [1.0.0-alpha20](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha20)
 - Changed validate function to always contain a list of errors (no single error on parse error)
 - Added `validateDictionary()` that validate a dictionary, where key is a filename and value is a CSS as string
 - Changed `validateFile()`, `validatePath()` and `validatePathList()` to handle possible file system exceptions (such errors will be stored as regular errors)
