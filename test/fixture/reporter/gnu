@@ -1,0 +1,5 @@
+"match.css":1.16-1.19: error: Invalid value for `color`: `123`; allowed: <color>
+"match.css":1.33-1.40: error: The rest part of value can't be matched to `border` syntax: `1px unknown red`; allowed: <br-width> || <br-style> || <color>
+"match.css":1.46: error: Unknown property `unknown`
+"parse.css":1.11: error: Colon is expected
+"parse.css":1.32-1.37: error: The rest part of value can't be matched to `color` syntax: `red green`; allowed: <color>

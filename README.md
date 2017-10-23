@@ -19,7 +19,7 @@ Usage:
 Options:
 
   -h, --help               Output usage information
-  -r, --reporter <name>    Format of output: console (default), checkstyle, json
+  -r, --reporter <name>    Format of output: console (default), checkstyle, json, gnu
   -v, --version            Output version
 ```
 
