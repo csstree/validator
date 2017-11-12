@@ -1,4 +1,4 @@
-## 1.2.2 (November 11, 2017)
+## 1.3.0 (November 12, 2017)
 
 - Added `gnu` reporter (@sideshowbarker, #8)
 - Updated `csstree` to 1.0.0-alpha.26
