@@ -54,5 +54,12 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "files": [
+    "bin",
+    "lib",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ]
 }
