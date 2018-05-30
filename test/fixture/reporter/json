@@ -12,8 +12,8 @@
         "line": 1,
         "column": 33,
         "property": "border",
-        "message": "The rest part of value can't be matched to `border` syntax",
-        "details": "Uncomplete match\n  syntax: <br-width> || <br-style> || <color>\n   value: 1px unknown red\n  ------------^"
+        "message": "Invalid value for `border`",
+        "details": "Mismatch\n  syntax: <br-width> || <br-style> || <color>\n   value: 1px unknown red\n  ------------^"
     },
     {
         "name": "match.css",
@@ -35,7 +35,7 @@
         "line": 1,
         "column": 32,
         "property": "color",
-        "message": "The rest part of value can't be matched to `color` syntax",
-        "details": "Uncomplete match\n  syntax: <color>\n   value: red green\n  ------------^"
+        "message": "Invalid value for `color`",
+        "details": "Mismatch\n  syntax: <color>\n   value: red green\n  ------------^"
     }
 ]
