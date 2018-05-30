@@ -1,3 +1,7 @@
+## 1.4.0 (May 30, 2018)
+
+- Updated `csstree` to [1.0.0-alpha.29](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.29)
+
 ## 1.3.1 (February 19, 2018)
 
 - Updated `csstree` to 1.0.0-alpha.28
