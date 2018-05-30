@@ -45,12 +45,12 @@ describe('validate functions', function() {
         });
 
         it('should not fail when file not found', function() {
-            var filename = Math.random();
+            var filename = String(Math.random());
             var errors = fn.validateFile(filename);
 
             assert.deepEqual(Object.keys(errors), [filename]);
             assert.equal(errors[filename].length, 1);
-            assert.equal(errors[filename][0].name, 'TypeError');
+            assert.equal(errors[filename][0].name, 'Error');
         });
     });
 
@@ -88,12 +88,12 @@ describe('validate functions', function() {
         });
 
         it('should not fail when path is invalid', function() {
-            var path = Math.random();
+            var path = String(Math.random());
             var errors = fn.validatePath(path);
 
             assert.deepEqual(Object.keys(errors), [path]);
             assert.equal(errors[path].length, 1);
-            assert.equal(errors[path][0].name, 'TypeError');
+            assert.equal(errors[path][0].name, 'Error');
         });
     });
 
