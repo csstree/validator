@@ -57,6 +57,7 @@
   },
   "files": [
     "bin",
-    "lib"
+    "lib",
+    "LICENSE"
   ]
 }
