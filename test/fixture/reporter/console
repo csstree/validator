@@ -4,13 +4,13 @@
        value: 123
       --------^
     * Invalid value for `border`
-      syntax: <br-width> || <br-style> || <color>
+      syntax: <line-width> || <line-style> || <color>
        value: 1px unknown red
       ------------^
     * Unknown property `unknown`
 
 # parse.css
-    [ERROR] CssSyntaxError: Colon is expected
+    [ERROR] Colon is expected
     * Invalid value for `color`
       syntax: <color>
        value: red green

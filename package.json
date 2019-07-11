@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "clap": "^1.1.1",
-    "css-tree": "1.0.0-alpha.29"
+    "css-tree": "1.0.0-alpha.32"
   },
   "devDependencies": {
     "eslint": "^2.13.1",
@@ -57,9 +57,6 @@
   },
   "files": [
     "bin",
-    "lib",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
+    "lib"
   ]
 }

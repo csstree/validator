@@ -13,7 +13,7 @@
         "column": 33,
         "property": "border",
         "message": "Invalid value for `border`",
-        "details": "Mismatch\n  syntax: <br-width> || <br-style> || <color>\n   value: 1px unknown red\n  ------------^"
+        "details": "Mismatch\n  syntax: <line-width> || <line-style> || <color>\n   value: 1px unknown red\n  ------------^"
     },
     {
         "name": "match.css",
