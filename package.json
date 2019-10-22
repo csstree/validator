@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "clap": "^1.1.1",
-    "css-tree": "1.0.0-alpha.34"
+    "css-tree": "1.0.0-alpha.37"
   },
   "devDependencies": {
     "eslint": "^6.3.0",

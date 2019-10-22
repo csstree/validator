@@ -1,3 +1,7 @@
+## next
+
+- Updated `csstree` to [1.0.0-alpha.37](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.37)
+
 ## 1.5.1 (October 7, 2019)
 
 - Updated `csstree` to [1.0.0-alpha.34](https://github.com/csstree/csstree/releases/tag/v1.0.0-alpha.34)
