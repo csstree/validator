@@ -1,4 +1,4 @@
-## next
+## 1.6.0 (October 27, 2020)
 
 - Bumped `csstree` to [1.0.0](https://github.com/csstree/csstree/releases/tag/v1.0.0)
 
