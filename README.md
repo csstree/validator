@@ -18,9 +18,9 @@ Usage:
 
 Options:
 
-  -h, --help               Output usage information
-  -r, --reporter <name>    Format of output: console (default), checkstyle, json, gnu
-  -v, --version            Output version
+  -h, --help                     Output usage information
+  -r, --reporter <nameOrFile>    Format of output: console (default), checkstyle, json, gnu, "path-to-custom-reporter.js"
+  -v, --version                  Output version
 ```
 
 ## API
