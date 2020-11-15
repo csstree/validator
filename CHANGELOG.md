@@ -1,6 +1,7 @@
 ## next
 
 - Drop support for Nodejs < 8
+- CLI exits with code `1` and outputs to `stderr` when errors
 
 ## 1.6.0 (October 27, 2020)
 
