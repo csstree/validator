@@ -1,22 +1,22 @@
-var assert = require('assert');
-var validateString = require('../lib/validate').validateString;
+const assert = require('assert');
+const { validateString } = require('../lib');
 
 describe('locations', function() {
     it('result should contain correct parse error location', function() {
-        var error = validateString('.broken {\n  a;\n}', 'test').test[0];
+        const error = validateString('.broken {\n  a;\n}', 'test').test[0];
 
-        assert.equal(error.line, 2, 'line');
-        assert.equal(error.column, 4, 'column');
-        assert.equal(error.offset, 13, 'offset');
+        assert.strictEqual(error.line, 2, 'line');
+        assert.strictEqual(error.column, 4, 'column');
+        assert.strictEqual(error.offset, 13, 'offset');
     });
 
     it('result should contain correct location of unknown property', function() {
-        var error = validateString('.broken {\n  abc: 1;\n}', 'test').test[0];
+        const error = validateString('.broken {\n  abc: 1;\n}', 'test').test[0];
 
-        assert.equal(error.message, 'Unknown property `abc`');
-        assert.equal(error.line, 2);
-        assert.equal(error.column, 3);
-        assert.deepEqual(error.loc, {
+        assert.strictEqual(error.message, 'Unknown property `abc`');
+        assert.strictEqual(error.line, 2);
+        assert.strictEqual(error.column, 3);
+        assert.deepStrictEqual(error.loc, {
             source: 'test',
             start: {
                 offset: 12,
@@ -32,12 +32,12 @@ describe('locations', function() {
     });
 
     it('result should contain correct location of mismatch', function() {
-        var error = validateString('.broken {\n  color: rgb(1, green, 3);\n}', 'test').test[0];
+        const error = validateString('.broken {\n  color: rgb(1, green, 3);\n}', 'test').test[0];
 
-        assert.equal(error.message, 'Invalid value for `color`');
-        assert.equal(error.line, 2);
-        assert.equal(error.column, 17);
-        assert.deepEqual(error.loc, {
+        assert.strictEqual(error.message, 'Invalid value for `color`');
+        assert.strictEqual(error.line, 2);
+        assert.strictEqual(error.column, 17);
+        assert.deepStrictEqual(error.loc, {
             source: 'test',
             start: {
                 offset: 26,
@@ -53,12 +53,12 @@ describe('locations', function() {
     });
 
     it('result should contain correct location of uncomplete mismatch', function() {
-        var error = validateString('.broken {\n  border: red 1xx solid;\n}', 'test').test[0];
+        const error = validateString('.broken {\n  border: red 1xx solid;\n}', 'test').test[0];
 
-        assert.equal(error.message, 'Invalid value for `border`');
-        assert.equal(error.line, 2);
-        assert.equal(error.column, 15);
-        assert.deepEqual(error.loc, {
+        assert.strictEqual(error.message, 'Invalid value for `border`');
+        assert.strictEqual(error.line, 2);
+        assert.strictEqual(error.column, 15);
+        assert.deepStrictEqual(error.loc, {
             source: 'test',
             start: {
                 offset: 24,
@@ -74,8 +74,8 @@ describe('locations', function() {
     });
 
     it('should not warn on custom properties', function() {
-        var error = validateString('.broken { --foo: 123 }', 'test').test;
+        const error = validateString('.broken { --foo: 123 }', 'test').test;
 
-        assert.deepEqual(error, []);
+        assert.deepStrictEqual(error, []);
     });
 });
