@@ -19,21 +19,32 @@
     "lint-and-test": "npm run lint && npm test",
     "lint": "eslint lib test",
     "test": "mocha --reporter dot",
-    "travis": "npm run lint-and-test"
+    "build": "rollup --config",
+    "travis": "npm run lint-and-test",
+    "prepublishOnly": "npm run build"
+  },
+  "browser": {
+    "css-tree": "css-tree/dist/csstree.min.js"
   },
   "dependencies": {
     "clap": "^1.1.1",
     "css-tree": "^1.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "eslint": "^6.3.0",
-    "mocha": "^5.2.0"
+    "mocha": "^6.2.3",
+    "rollup": "^1.32.1",
+    "rollup-plugin-terser": "^5.3.0"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "files": [
     "bin",
+    "dist",
     "lib"
   ]
 }

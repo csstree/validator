@@ -1,7 +1,8 @@
 ## next
 
-- Drop support for Nodejs < 8
-- CLI exits with code `1` and outputs to `stderr` when errors
+- Droped support for Nodejs < 8
+- CLI exits with code `1` and outputs to `stderr` when errors (#12)
+- Added built version for browsers: `dist/csstree-validator.js` (#11)
 
 ## 1.6.0 (October 27, 2020)
 
