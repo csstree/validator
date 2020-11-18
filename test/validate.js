@@ -1,156 +1,124 @@
-const path = require('path');
 const assert = require('assert');
-const fn = require('../lib');
-const fixturePath = path.join(__dirname, 'fixture/css');
+const { validate } = require('../lib');
+
+function assertError(css, loc, expectedMsg) {
+    const res = validate(css);
+
+    assert.strictEqual(Array.isArray(res), true, 'should return an array of errors');
+    assert.strictEqual(res.length > 0, true, 'should return errors');
+    assert.deepStrictEqual(res[0].message, expectedMsg);
+
+    if (loc) {
+        const { offset, line, column } = res[0];
+        const expectedOffset = loc.length - 1 - (css.slice(0, loc.length - 1).match(/\n/g) || []).length;
+        const lines = css.slice(0, expectedOffset).split(/\n/);
+
+        assert.deepStrictEqual({ offset, line, column }, {
+            offset: expectedOffset,
+            line: lines.length,
+            column: lines.pop().length + 1
+        });
+    }
+}
+
+function assertOk(css) {
+    assert.deepStrictEqual(validate(css), []);
+}
 
 describe('validate functions', function() {
-    describe('validateString', function() {
-        it('should validate errors in CSS string', function() {
-            const errors = fn.validateString('foo { a: 1; color: bad; }', 'test');
+    describe('declaration', () => {
+        it('unknown property', () =>
+            assertError(
+                '.a {\n  foo: 123;\n}',
+                '        ^',
+                'Unknown property `foo`'
+            )
+        );
 
-            assert.strictEqual(Array.isArray(errors.test), true);
-            assert.strictEqual(errors.test.length, 2);
-        });
+        it('bad value', () =>
+            assertError(
+                '.a {\n  color: 123;\n}',
+                '               ^',
+                'Invalid value for `color` property'
+            )
+        );
 
-        it('filename should be optional', function() {
-            const errors = fn.validateString('foo {}');
+        it('bad value #2', () =>
+            assertError(
+                '.a {\n  color: red green;\n}',
+                '                   ^',
+                'Invalid value for `color` property'
+            )
+        );
 
-            assert.deepStrictEqual(Object.keys(errors), ['<unknown>']);
-        });
+        it('bad value #3', () =>
+            assertError(
+                '.a {\n  border: 1px unknown red;\n}',
+                '                    ^',
+                'Invalid value for `border` property'
+            )
+        );
+
+        it('ok', () =>
+            assertOk('.a {\n  color: green;\n}')
+        );
     });
 
-    it('validateDictionary', function() {
-        const errors = fn.validateDictionary({
-            'foo': 'foo { a: 1; color: bad; }',
-            'bar': 'valid {}'
-        });
+    describe('atrule', () => {
+        it('unknown at-rule', () =>
+            assertError(
+                '@a { color: green }',
+                '^',
+                'Unknown at-rule `@a`'
+            )
+        );
 
-        assert.deepStrictEqual(Object.keys(errors).sort(), ['bar', 'foo']);
-        assert.strictEqual(Array.isArray(errors.foo), true);
-        assert.strictEqual(errors.foo.length, 2);
-        assert.strictEqual(Array.isArray(errors.bar), true);
-        assert.strictEqual(errors.bar.length, 0);
-    });
+        it('at-rule has no prelude', () =>
+            assertError(
+                '@font-face xxx { color: green }',
+                '           ^',
+                'At-rule `@font-face` should not contain a prelude'
+            )
+        );
 
-    describe('validateFile', function() {
-        it('should validate file content', function() {
-            const filename = path.join(fixturePath, 'style.css');
-            const errors = fn.validateFile(filename);
+        it('at-rule should has a prelude', () =>
+            assertError(
+                '@document { color: green }',
+                '^',
+                'At-rule `@document` should contain a prelude'
+            )
+        );
 
-            assert.deepStrictEqual(Object.keys(errors), [filename]);
-            assert.strictEqual(errors[filename].length, 2);
-            assert.deepStrictEqual(errors[filename].map(function(error) {
-                return error.name;
-            }), ['SyntaxReferenceError', 'SyntaxMatchError']);
-        });
+        it('bad value for at-rule prelude', () =>
+            assertError(
+                '@document domain( foo /***/) { }',
+                '                  ^',
+                'Invalid value for `@document` prelude'
+            )
+        );
 
-        it('should not fail when file not found', function() {
-            const filename = String(Math.random());
-            const errors = fn.validateFile(filename);
+        it('ok at-rule prelude', () =>
+            assertOk('@document url(foo) { }')
+        );
 
-            assert.deepStrictEqual(Object.keys(errors), [filename]);
-            assert.strictEqual(errors[filename].length, 1);
-            assert.strictEqual(errors[filename][0].name, 'Error');
-        });
-    });
+        it('bad at-rule descriptor', () =>
+            assertError(
+                '@font-face { color: green }',
+                '             ^',
+                'Unknown at-rule descriptor `color`'
+            )
+        );
 
-    describe('validatePath', function() {
-        it('should validate all files with .css extension on path', function() {
-            const errors = fn.validatePath(fixturePath);
+        it('bad at-rule descriptor value', () =>
+            assertError(
+                '@font-face { font-display: foo }',
+                '                           ^',
+                'Invalid value for `font-display` descriptor'
+            )
+        );
 
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/style.css', 'foo/style.css', 'style.css']);
-
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
-            });
-        });
-
-        it('should validate all files that match shouldBeValidated on path', function() {
-            const errors = fn.validatePath(fixturePath, function(filename) {
-                return path.basename(filename) === 'not.a.css.file';
-            });
-
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/not.a.css.file']);
-
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
-            });
-        });
-
-        it('should not fail when path is invalid', function() {
-            const path = String(Math.random());
-            const errors = fn.validatePath(path);
-
-            assert.deepStrictEqual(Object.keys(errors), [path]);
-            assert.strictEqual(errors[path].length, 1);
-            assert.strictEqual(errors[path][0].name, 'Error');
-        });
-    });
-
-    describe('validatePathList', function() {
-        it('should validate all files with .css extension on paths', function() {
-            const errors = fn.validatePathList([
-                path.join(fixturePath, 'bar'),
-                path.join(fixturePath, 'foo')
-            ]);
-
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/style.css', 'foo/style.css']);
-
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
-            });
-        });
-
-        it('should validate all files that match shouldBeValidated on path', function() {
-            const errors = fn.validatePathList([
-                path.join(fixturePath, 'bar'),
-                path.join(fixturePath, 'foo')
-            ], function(filename) {
-                return path.basename(filename) === 'not.a.css.file';
-            });
-
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/not.a.css.file']);
-
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
-            });
-        });
-
-        it('should not fail when path is invalid', function() {
-            const validPath = path.join(fixturePath, 'bar');
-            const invalidPath = Math.random();
-            const errors = fn.validatePathList([
-                validPath,
-                invalidPath
-            ]);
-
-            assert.deepStrictEqual(Object.keys(errors), [
-                path.join(validPath, 'style.css'),
-                String(invalidPath)
-            ]);
-            assert.strictEqual(errors[path.join(validPath, 'style.css')].length, 2);
-            assert.strictEqual(errors[invalidPath].length, 1);
-            assert.strictEqual(errors[invalidPath][0].name, 'Error');
-        });
+        it('ok at-rule descriptor', () =>
+            assertOk('@font-face { font-display: swap }')
+        );
     });
 });

@@ -16,61 +16,22 @@ describe('locations', function() {
         assert.strictEqual(error.message, 'Unknown property `abc`');
         assert.strictEqual(error.line, 2);
         assert.strictEqual(error.column, 3);
-        assert.deepStrictEqual(error.loc, {
-            source: 'test',
-            start: {
-                offset: 12,
-                line: 2,
-                column: 3
-            },
-            end: {
-                offset: 18,
-                line: 2,
-                column: 9
-            }
-        });
     });
 
     it('result should contain correct location of mismatch', function() {
         const error = validateString('.broken {\n  color: rgb(1, green, 3);\n}', 'test').test[0];
 
-        assert.strictEqual(error.message, 'Invalid value for `color`');
+        assert.strictEqual(error.message, 'Invalid value for `color` property');
         assert.strictEqual(error.line, 2);
         assert.strictEqual(error.column, 17);
-        assert.deepStrictEqual(error.loc, {
-            source: 'test',
-            start: {
-                offset: 26,
-                line: 2,
-                column: 17
-            },
-            end: {
-                offset: 31,
-                line: 2,
-                column: 22
-            }
-        });
     });
 
     it('result should contain correct location of uncomplete mismatch', function() {
         const error = validateString('.broken {\n  border: red 1xx solid;\n}', 'test').test[0];
 
-        assert.strictEqual(error.message, 'Invalid value for `border`');
+        assert.strictEqual(error.message, 'Invalid value for `border` property');
         assert.strictEqual(error.line, 2);
         assert.strictEqual(error.column, 15);
-        assert.deepStrictEqual(error.loc, {
-            source: 'test',
-            start: {
-                offset: 24,
-                line: 2,
-                column: 15
-            },
-            end: {
-                offset: 27,
-                line: 2,
-                column: 18
-            }
-        });
     });
 
     it('should not warn on custom properties', function() {

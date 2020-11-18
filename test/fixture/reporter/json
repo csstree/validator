@@ -4,7 +4,7 @@
         "line": 1,
         "column": 16,
         "property": "color",
-        "message": "Invalid value for `color`",
+        "message": "Invalid value for `color` property",
         "details": "Mismatch\n  syntax: <color>\n   value: 123\n  --------^"
     },
     {
@@ -12,7 +12,7 @@
         "line": 1,
         "column": 33,
         "property": "border",
-        "message": "Invalid value for `border`",
+        "message": "Invalid value for `border` property",
         "details": "Mismatch\n  syntax: <line-width> || <line-style> || <color>\n   value: 1px unknown red\n  ------------^"
     },
     {
@@ -35,7 +35,7 @@
         "line": 1,
         "column": 32,
         "property": "color",
-        "message": "Invalid value for `color`",
+        "message": "Invalid value for `color` property",
         "details": "Mismatch\n  syntax: <color>\n   value: red green\n  ------------^"
     }
 ]

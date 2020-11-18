@@ -1,9 +1,9 @@
 # match.css
-    * Invalid value for `color`
+    * Invalid value for `color` property
       syntax: <color>
        value: 123
       --------^
-    * Invalid value for `border`
+    * Invalid value for `border` property
       syntax: <line-width> || <line-style> || <color>
        value: 1px unknown red
       ------------^
@@ -11,7 +11,7 @@
 
 # parse.css
     [ERROR] Colon is expected
-    * Invalid value for `color`
+    * Invalid value for `color` property
       syntax: <color>
        value: red green
       ------------^
