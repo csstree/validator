@@ -3,10 +3,90 @@
 
 # CSS Tree Validator
 
+CSS validator built on [CSSTree](https://github.com/csstree/csstree)
+
 ## How to use:
 
+### NPM package
+
 ```bash
-> npm i -g csstree-validator
+> npm install csstree-validator
+```
+
+Manualy validate CSS string or [CSSTree's AST](https://github.com/csstree/csstree/blob/master/docs/ast.md):
+
+```js
+const { validate } = require('./lib');
+
+console.log(validate('.class { pading: 10px; border: 1px super red }', 'demo/example.css'));
+// [
+//   SyntaxError [SyntaxReferenceError]: Unknown property `pading` {
+//     reference: 'pading',
+//     property: 'pading',
+//     offset: 9,
+//     line: 1,
+//     column: 10
+//   },
+//  SyntaxError [SyntaxMatchError]: Mismatch {
+//    message: 'Invalid value for `border` property',
+//    rawMessage: 'Mismatch',
+//    syntax: '<line-width> || <line-style> || <color>',
+//    css: '1px super red',
+//    mismatchOffset: 4,
+//    mismatchLength: 5,
+//    offset: 35,
+//    line: 1,
+//    column: 36,
+//    loc: { source: 'demo/example.css', start: [Object], end: [Object] },
+//    property: 'border',
+//    details: 'Mismatch\n' +
+//      '  syntax: <line-width> || <line-style> || <color>\n' +
+//      '   value: 1px super red\n' +
+//      '  ------------^'
+//  }
+// ]
+```
+
+Another option is to use helpers to validate a file or directory and buildin reporters:
+
+```js
+const { validateFile } = require('csstree-validator');
+const reporter = require('csstree-validator').reporters.checkstyle;
+
+console.log(reporter(validateFile('/path/to/style.css')));
+```
+
+#### API
+
+Validate methods:
+
+* validateAtrule(node)
+* validateAtrulePrelude(atrule, prelude, preludeLoc)
+* validateAtruleDescriptor(atrule, descriptor, value, descriptorLoc)
+* validateDeclaration(property, value, valueLoc)
+* validateRule(node)
+* validate(css, filename)
+
+Helpers:
+
+* validateDictionary(dictionary)
+* validateString(css, filename)
+* validateFile(filename)
+* validateFileList(list)
+* validatePath(searchPath, filter)
+* validatePathList(pathList, filter)
+
+Reporters
+
+* json
+* console
+* checkstyle
+* gnu
+
+### CLI (terminal command)
+
+```bash
+> npm install -g csstree-validator
 > csstree-validator /path/to/style.css
 ```
 
@@ -23,18 +103,9 @@ Options:
   -v, --version            Output version
 ```
 
-## API
-
-```js
-var validateFile = require('csstree-validator').validateFile;
-var reporter = require('csstree-validator').reporters.checkstyle;
-
-console.log(reporter(validateFile('/path/to/style.css')));
-```
-
 ## Ready to use
 
-Some plugins that are using `csstree-validator`:
+Plugins that are using `csstree-validator`:
 
 * [Sublime plugin](https://github.com/csstree/SublimeLinter-contrib-csstree)
 * [VS Code plugin](https://github.com/csstree/vscode-plugin)
