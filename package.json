@@ -1,7 +1,7 @@
 {
   "name": "csstree-validator",
-  "version": "1.6.0",
-  "description": "CSS validator build on csstree",
+  "version": "2.0.0",
+  "description": "CSS validator built on csstree",
   "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
   "repository": "csstree/validator",

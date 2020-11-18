@@ -1,7 +1,8 @@
-## next
+## 2.0.0 (November 18, 2020)
 
 - Droped support for Nodejs < 8
-- CLI exits with code `1` and outputs to `stderr` when errors (#12)
+- Bumped `csstree` to [1.1.1](https://github.com/csstree/csstree/releases/tag/v1.1.1)
+- CLI exits with code `1` and outputs messages to `stderr` when errors (#12)
 - Added built version for browsers: `dist/csstree-validator.js` (#11)
 - Added at-rule validation for name, prelude and descriptor
 - Added `validateAtrule`, `validateAtrulePrelude`, `validateAtruleDescriptor`, `validateRule` and `validateDeclaration` methods
