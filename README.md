@@ -76,12 +76,23 @@ Helpers:
 * validatePath(searchPath, filter)
 * validatePathList(pathList, filter)
 
-Reporters
+Reporters:
 
 * json
 * console
 * checkstyle
 * gnu
+
+### Library in a browser
+
+```html
+<script src="csstree-validator/dist/csstree-validator.js"></script>
+<script>
+    const errors = csstreeValidator.validate('.some { css: source }');
+</script>
+```
+
+NOTE: Helpers and reporters are not available for browser version at the moment.
 
 ### CLI (terminal command)
 
