@@ -1,6 +1,7 @@
 ## next
 
 - Fixed wrong `require()` in CLI that causes to crash
+- Bumped `csstree` to [1.1.3](https://github.com/csstree/csstree/releases/tag/v1.1.1) to fix the issue with parsing that causes to a failure on a value with function/brackets and `!important` (#18)
 
 ## 2.0.0 (November 18, 2020)
 

@@ -60,7 +60,7 @@ describe('validate functions', function() {
         );
 
         it('ok', () =>
-            assertOk('.a {\n  color: green;\n}')
+            assertOk('.a {\n  color: green;\n  width: calc(1px + 1%)!important\n}')
         );
     });
 

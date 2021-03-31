@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "clap": "^1.1.1",
-    "css-tree": "^1.1.1"
+    "css-tree": "^1.1.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
