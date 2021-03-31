@@ -1,3 +1,7 @@
+## next
+
+- Fixed wrong `require()` in CLI that causes to crash
+
 ## 2.0.0 (November 18, 2020)
 
 - Droped support for Nodejs < 8
