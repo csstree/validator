@@ -1,6 +1,9 @@
 [![NPM version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
 [![Build Status](https://travis-ci.org/csstree/validator.svg?branch=master)](https://travis-ci.org/csstree/validator)
 
+### Note
+This is a fork of [`csstree-validator`](https://github.com/csstree/validator) that creates an ESM build of the JS modules for modern ESM bundlers like Snowpack and Vite. Only `validate.js` is included. The binary can be found in the original repository.
+
 # CSS Tree Validator
 
 CSS validator built on [CSSTree](https://github.com/csstree/csstree)

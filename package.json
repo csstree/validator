@@ -5,15 +5,17 @@
   "author": "Roman Dvornov <rdvornov@gmail.com>",
   "license": "MIT",
   "repository": "csstree/validator",
+  "exports": {
+    ".": "./csstree-validator.js",
+    "./csstree-validator-esm.js.map": "./csstree-validator-esm.js.map"
+  },
+  "type": "module",
   "keywords": [
     "css",
     "syntax",
     "validator",
     "checker"
   ],
-  "bin": {
-    "csstree-validator": "./bin/validate"
-  },
   "main": "./lib/index",
   "scripts": {
     "lint-and-test": "npm run lint && npm test",
@@ -43,8 +45,7 @@
     "node": ">=8.0.0"
   },
   "files": [
-    "bin",
-    "dist",
-    "lib"
+    "csstree-validator.js.map",
+    "csstree-validator.js"
   ]
 }
