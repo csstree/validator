@@ -1,7 +1,8 @@
 [![NPM version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
-[![Build Status](https://travis-ci.org/csstree/validator.svg?branch=master)](https://travis-ci.org/csstree/validator)
+[![Build Status](https://github.com/csstree/validator/actions/workflows/build.yml/badge.svg)](https://github.com/csstree/validator/actions/workflows/build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/csstree/validator/badge.svg?branch=master)](https://coveralls.io/github/csstree/validator?branch=master)
 
-# CSS Tree Validator
+# CSSTree Validator
 
 CSS validator built on [CSSTree](https://github.com/csstree/csstree)
 

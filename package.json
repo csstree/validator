@@ -35,14 +35,15 @@
     "bundle-and-test": "npm run bundle && npm run test:dist",
     "esm-to-cjs": "node scripts/esm-to-cjs",
     "esm-to-cjs-and-test": "npm run esm-to-cjs && npm run test:cjs",
-    "travis": "npm run lint-and-test",
-    "prepublishOnly": "npm run build"
+    "coverage": "c8 --reporter=lcovonly npm test",
+    "prepublishOnly": "npm run lint-and-test && npm run build-and-test"
   },
   "dependencies": {
     "clap": "^1.1.1",
     "css-tree": "^2.0.1"
   },
   "devDependencies": {
+    "c8": "^7.10.0",
     "esbuild": "^0.14.2",
     "eslint": "^8.4.1",
     "mocha": "^9.1.3",
