@@ -1,156 +1,182 @@
-const path = require('path');
-const assert = require('assert');
-const fn = require('../lib');
-const fixturePath = path.join(__dirname, 'fixture/css');
+import path from 'path';
+import { strictEqual, deepStrictEqual } from 'assert';
+import {
+    validateString,
+    validateDictionary,
+    validateFile,
+    validatePath,
+    validatePathList
+} from 'csstree-validator';
 
-describe('validators', function() {
-    describe('validateString', function() {
-        it('should validate errors in CSS string', function() {
-            const errors = fn.validateString('foo { a: 1; color: bad; }', 'test');
+const fixturePath = path.join(
+    path.dirname(new URL(import.meta.url).pathname),
+    'fixture/css'
+);
 
-            assert.strictEqual(Array.isArray(errors.test), true);
-            assert.strictEqual(errors.test.length, 2);
+describe('validators', () => {
+    describe('validateString', () => {
+        it('should validate errors in CSS string', () => {
+            const errors = validateString('foo { a: 1; color: bad; }', 'test');
+
+            strictEqual(Array.isArray(errors.test), true);
+            strictEqual(errors.test.length, 2);
         });
 
-        it('filename should be optional', function() {
-            const errors = fn.validateString('foo {}');
+        it('filename should be optional', () => {
+            const errors = validateString('foo {}');
 
-            assert.deepStrictEqual(Object.keys(errors), ['<unknown>']);
+            deepStrictEqual(Object.keys(errors), ['<unknown>']);
         });
     });
 
-    it('validateDictionary', function() {
-        const errors = fn.validateDictionary({
+    it('validateDictionary', () => {
+        const errors = validateDictionary({
             'foo': 'foo { a: 1; color: bad; }',
             'bar': 'valid {}'
         });
 
-        assert.deepStrictEqual(Object.keys(errors).sort(), ['bar', 'foo']);
-        assert.strictEqual(Array.isArray(errors.foo), true);
-        assert.strictEqual(errors.foo.length, 2);
-        assert.strictEqual(Array.isArray(errors.bar), true);
-        assert.strictEqual(errors.bar.length, 0);
+        deepStrictEqual(Object.keys(errors).sort(), ['bar', 'foo']);
+        strictEqual(Array.isArray(errors.foo), true);
+        strictEqual(errors.foo.length, 2);
+        strictEqual(Array.isArray(errors.bar), true);
+        strictEqual(errors.bar.length, 0);
     });
 
-    describe('validateFile', function() {
-        it('should validate file content', function() {
+    describe('validateFile', () => {
+        it('should validate file content', () => {
             const filename = path.join(fixturePath, 'style.css');
-            const errors = fn.validateFile(filename);
+            const errors = validateFile(filename);
 
-            assert.deepStrictEqual(Object.keys(errors), [filename]);
-            assert.strictEqual(errors[filename].length, 2);
-            assert.deepStrictEqual(errors[filename].map(function(error) {
-                return error.name;
-            }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            deepStrictEqual(Object.keys(errors), [filename]);
+            strictEqual(errors[filename].length, 2);
+            deepStrictEqual(
+                errors[filename].map(error => error.name),
+                ['SyntaxReferenceError', 'SyntaxMatchError']
+            );
         });
 
-        it('should not fail when file not found', function() {
+        it('should not fail when file not found', () => {
             const filename = String(Math.random());
-            const errors = fn.validateFile(filename);
+            const errors = validateFile(filename);
 
-            assert.deepStrictEqual(Object.keys(errors), [filename]);
-            assert.strictEqual(errors[filename].length, 1);
-            assert.strictEqual(errors[filename][0].name, 'Error');
+            deepStrictEqual(Object.keys(errors), [filename]);
+            strictEqual(errors[filename].length, 1);
+            strictEqual(errors[filename][0].name, 'Error');
         });
     });
 
-    describe('validatePath', function() {
-        it('should validate all files with .css extension on path', function() {
-            const errors = fn.validatePath(fixturePath);
+    describe('validatePath', () => {
+        it('should validate all files with .css extension on path', () => {
+            const errors = validatePath(fixturePath);
 
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/style.css', 'foo/style.css', 'style.css']);
+            deepStrictEqual(
+                Object.keys(errors)
+                    .map(filename => path.relative(fixturePath, filename))
+                    .sort(),
+                ['bar/style.css', 'foo/style.css', 'style.css']
+            );
 
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            Object.keys(errors).forEach((filename) => {
+                strictEqual(errors[filename].length, 2);
+                deepStrictEqual(
+                    errors[filename].map((error) => error.name),
+                    ['SyntaxReferenceError', 'SyntaxMatchError']
+                );
             });
         });
 
-        it('should validate all files that match shouldBeValidated on path', function() {
-            const errors = fn.validatePath(fixturePath, function(filename) {
-                return path.basename(filename) === 'not.a.css.file';
-            });
+        it('should validate all files that match shouldBeValidated on path', () => {
+            const errors = validatePath(
+                fixturePath,
+                filename => path.basename(filename) === 'not.a.css.file'
+            );
 
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/not.a.css.file']);
+            deepStrictEqual(
+                Object.keys(errors)
+                    .map(filename => path.relative(fixturePath, filename))
+                    .sort(),
+                ['bar/not.a.css.file']
+            );
 
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            Object.keys(errors).forEach((filename) => {
+                strictEqual(errors[filename].length, 2);
+                deepStrictEqual(
+                    errors[filename].map((error) => error.name),
+                    ['SyntaxReferenceError', 'SyntaxMatchError']
+                );
             });
         });
 
-        it('should not fail when path is invalid', function() {
+        it('should not fail when path is invalid', () => {
             const path = String(Math.random());
-            const errors = fn.validatePath(path);
+            const errors = validatePath(path);
 
-            assert.deepStrictEqual(Object.keys(errors), [path]);
-            assert.strictEqual(errors[path].length, 1);
-            assert.strictEqual(errors[path][0].name, 'Error');
+            deepStrictEqual(Object.keys(errors), [path]);
+            strictEqual(errors[path].length, 1);
+            strictEqual(errors[path][0].name, 'Error');
         });
     });
 
-    describe('validatePathList', function() {
-        it('should validate all files with .css extension on paths', function() {
-            const errors = fn.validatePathList([
+    describe('validatePathList', () => {
+        it('should validate all files with .css extension on paths', () => {
+            const errors = validatePathList([
                 path.join(fixturePath, 'bar'),
                 path.join(fixturePath, 'foo')
             ]);
 
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/style.css', 'foo/style.css']);
+            deepStrictEqual(
+                Object.keys(errors)
+                    .map(filename => path.relative(fixturePath, filename))
+                    .sort(),
+                ['bar/style.css', 'foo/style.css']
+            );
 
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            Object.keys(errors).forEach((filename) => {
+                strictEqual(errors[filename].length, 2);
+                deepStrictEqual(
+                    errors[filename].map((error) => error.name),
+                    ['SyntaxReferenceError', 'SyntaxMatchError']
+                );
             });
         });
 
-        it('should validate all files that match shouldBeValidated on path', function() {
-            const errors = fn.validatePathList([
+        it('should validate all files that match shouldBeValidated on path', () => {
+            const errors = validatePathList([
                 path.join(fixturePath, 'bar'),
                 path.join(fixturePath, 'foo')
-            ], function(filename) {
-                return path.basename(filename) === 'not.a.css.file';
-            });
+            ], filename => path.basename(filename) === 'not.a.css.file');
 
-            assert.deepStrictEqual(Object.keys(errors).map(function(filename) {
-                return path.relative(fixturePath, filename);
-            }).sort(), ['bar/not.a.css.file']);
+            deepStrictEqual(
+                Object.keys(errors)
+                    .map((filename) => path.relative(fixturePath, filename))
+                    .sort(),
+                ['bar/not.a.css.file']
+            );
 
-            Object.keys(errors).forEach(function(filename) {
-                assert.strictEqual(errors[filename].length, 2);
-                assert.deepStrictEqual(errors[filename].map(function(error) {
-                    return error.name;
-                }), ['SyntaxReferenceError', 'SyntaxMatchError']);
+            Object.keys(errors).forEach((filename) => {
+                strictEqual(errors[filename].length, 2);
+                deepStrictEqual(
+                    errors[filename].map((error) => error.name),
+                    ['SyntaxReferenceError', 'SyntaxMatchError']
+                );
             });
         });
 
-        it('should not fail when path is invalid', function() {
+        it('should not fail when path is invalid', () => {
             const validPath = path.join(fixturePath, 'bar');
             const invalidPath = Math.random();
-            const errors = fn.validatePathList([
+            const errors = validatePathList([
                 validPath,
                 invalidPath
             ]);
 
-            assert.deepStrictEqual(Object.keys(errors), [
+            deepStrictEqual(Object.keys(errors), [
                 path.join(validPath, 'style.css'),
                 String(invalidPath)
             ]);
-            assert.strictEqual(errors[path.join(validPath, 'style.css')].length, 2);
-            assert.strictEqual(errors[invalidPath].length, 1);
-            assert.strictEqual(errors[invalidPath][0].name, 'Error');
+            strictEqual(errors[path.join(validPath, 'style.css')].length, 2);
+            strictEqual(errors[invalidPath].length, 1);
+            strictEqual(errors[invalidPath][0].name, 'TypeError');
         });
     });
 });

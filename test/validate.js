@@ -1,19 +1,19 @@
-const assert = require('assert');
-const { validate } = require('../lib');
+import { strictEqual, deepStrictEqual } from 'assert';
+import { validate } from 'csstree-validator';
 
 function assertError(css, loc, expectedMsg) {
     const res = validate(css);
 
-    assert.strictEqual(Array.isArray(res), true, 'should return an array of errors');
-    assert.strictEqual(res.length > 0, true, 'should return errors');
-    assert.deepStrictEqual(res[0].message, expectedMsg);
+    strictEqual(Array.isArray(res), true, 'should return an array of errors');
+    strictEqual(res.length > 0, true, 'should return errors');
+    deepStrictEqual(res[0].message, expectedMsg);
 
     if (loc) {
         const { offset, line, column } = res[0];
         const expectedOffset = loc.length - 1 - (css.slice(0, loc.length - 1).match(/\n/g) || []).length;
         const lines = css.slice(0, expectedOffset).split(/\n/);
 
-        assert.deepStrictEqual({ offset, line, column }, {
+        deepStrictEqual({ offset, line, column }, {
             offset: expectedOffset,
             line: lines.length,
             column: lines.pop().length + 1
@@ -22,7 +22,7 @@ function assertError(css, loc, expectedMsg) {
 }
 
 function assertOk(css) {
-    assert.deepStrictEqual(validate(css), []);
+    deepStrictEqual(validate(css), []);
 }
 
 describe('validate functions', function() {

@@ -12,35 +12,39 @@
     "checker"
   ],
   "bin": {
-    "csstree-validator": "./bin/validate"
+    "csstree-validator": "./bin/validate.js"
   },
-  "main": "./lib/index",
+  "type": "module",
+  "main": "./cjs/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "lint-and-test": "npm run lint && npm test",
     "lint": "eslint lib test",
     "test": "mocha --reporter dot",
-    "build": "rollup --config",
+    "build": "npm run bundle",
+    "bundle": "node scripts/bundle",
     "travis": "npm run lint-and-test",
     "prepublishOnly": "npm run build"
   },
-  "browser": {
-    "css-tree": "css-tree/dist/csstree.min.js"
-  },
   "dependencies": {
     "clap": "^1.1.1",
-    "css-tree": "^1.1.3"
+    "css-tree": "^2.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
+    "esbuild": "^0.14.2",
     "eslint": "^8.4.1",
     "mocha": "^9.1.3",
-    "rollup": "^2.60.2",
-    "rollup-plugin-terser": "^5.3.0"
+    "rollup": "^2.60.2"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": "^12.20.0 || ^14.13.0 || >=15.0.0",
+    "npm": ">=7.0.0"
   },
   "files": [
     "bin",

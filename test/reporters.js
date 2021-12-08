@@ -1,22 +1,22 @@
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
-const { validateDictionary, reporters } = require('../lib');
+import { readFileSync } from 'fs';
+import { strictEqual } from 'assert';
+import { validateDictionary, reporters } from 'csstree-validator';
+
 const input = {
     'parse.css': 'foo { boom! } bar { color: red green; }',
     'match.css': '.warn { color: 123; border: 1px unknown red; unknown: yep; --custom: property }'
 };
 
 function createReporterTest(name, reporter) {
-    it(name, function() {
-        const expected = fs.readFileSync(path.join(__dirname, 'fixture/reporter/' + name), 'utf8').trim();
+    it(name, () => {
+        const expected = readFileSync('./test/fixture/reporter/' + name, 'utf8').trim();
         const actual = reporter(validateDictionary(input)).trim();
 
-        assert.strictEqual(actual, expected);
+        strictEqual(actual, expected);
     });
 }
 
-describe('test reporter output', function() {
+describe('test reporter output', () => {
     for (const name in reporters) {
         createReporterTest(name, reporters[name]);
     }

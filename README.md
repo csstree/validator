@@ -92,7 +92,7 @@ Reporters:
 </script>
 ```
 
-NOTE: Helpers and reporters are not available for browser version at the moment.
+NOTE: Helpers and reporters are not available for browser's version.
 
 ### CLI (terminal command)
 

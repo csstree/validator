@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-var cli = require('../lib/cli.js');
+import { run, isCliError } from '../lib/cli.js';
 
 try {
-    cli.run();
+    run();
 } catch (e) {
     // output user frendly message if cli error
-    if (cli.isCliError(e)) {
+    if (isCliError(e)) {
         console.error(e.message || e);
         process.exit(2);
     }

@@ -1,3 +1,11 @@
+## next
+
+- Bumped `csstree` to [2.0](https://github.com/csstree/csstree/releases/tag/v2.0.0)
+- Package
+    - Changed supported versions of Node.js to `^12.20.0`, `^14.13.0` and `>=15.0.0`
+    - Converted to ES modules. However, CommonJS is supported as well (dual module)
+    - Added bundle `dist/csstree-validator.esm.js` as ES module
+
 ## 2.0.1 (March 31, 2021)
 
 - Fixed wrong `require()` in CLI that causes to crash
