@@ -26,9 +26,15 @@
   "scripts": {
     "lint-and-test": "npm run lint && npm test",
     "lint": "eslint lib test",
-    "test": "mocha --reporter dot",
-    "build": "npm run bundle",
+    "test": "mocha test --reporter ${REPORTER:-progress}",
+    "test:cjs": "mocha cjs-test --reporter ${REPORTER:-progress}",
+    "test:dist": "mocha dist/test --reporter ${REPORTER:-progress}",
+    "build": "npm run bundle && npm run esm-to-cjs",
+    "build-and-test": "npm run build && npm run test:dist && npm run test:cjs",
     "bundle": "node scripts/bundle",
+    "bundle-and-test": "npm run bundle && npm run test:dist",
+    "esm-to-cjs": "node scripts/esm-to-cjs",
+    "esm-to-cjs-and-test": "npm run esm-to-cjs && npm run test:cjs",
     "travis": "npm run lint-and-test",
     "prepublishOnly": "npm run build"
   },

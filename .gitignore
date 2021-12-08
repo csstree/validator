@@ -1,2 +1,4 @@
 *.log
+/cjs/
+/cjs-test/
 /node_modules/

@@ -8,10 +8,7 @@ import {
     validatePathList
 } from 'csstree-validator';
 
-const fixturePath = path.join(
-    path.dirname(new URL(import.meta.url).pathname),
-    'fixture/css'
-);
+const fixturePath = './fixtures/css';
 
 describe('validators', () => {
     describe('validateString', () => {

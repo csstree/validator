@@ -9,7 +9,7 @@ const input = {
 
 function createReporterTest(name, reporter) {
     it(name, () => {
-        const expected = readFileSync('./test/fixture/reporter/' + name, 'utf8').trim();
+        const expected = readFileSync('./fixtures/reporter/' + name, 'utf8').trim();
         const actual = reporter(validateDictionary(input)).trim();
 
         strictEqual(actual, expected);
