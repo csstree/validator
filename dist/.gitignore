@@ -1,3 +1,6 @@
-*
+*.cjs
+*.js
+!test/csstree-validator.cjs
+!test/csstree-validator.js
 !.gitignore
 !.npmignore
