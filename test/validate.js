@@ -1,4 +1,5 @@
 import { strictEqual, deepStrictEqual } from 'assert';
+import { parse } from 'css-tree';
 import { validate } from 'csstree-validator';
 
 function assertError(css, loc, expectedMsg) {
@@ -8,7 +9,7 @@ function assertError(css, loc, expectedMsg) {
     strictEqual(res.length > 0, true, 'should return errors');
     deepStrictEqual(res[0].message, expectedMsg);
 
-    if (loc) {
+    if (typeof loc === 'string') {
         const { offset, line, column } = res[0];
         const expectedOffset = loc.length - 1 - (css.slice(0, loc.length - 1).match(/\n/g) || []).length;
         const lines = css.slice(0, expectedOffset).split(/\n/);
@@ -19,6 +20,12 @@ function assertError(css, loc, expectedMsg) {
             column: lines.pop().length + 1
         });
     }
+
+    if (loc && typeof loc === 'object') {
+        const { offset, line, column } = res[0];
+
+        deepStrictEqual({ offset, line, column }, loc);
+    }
 }
 
 function assertOk(css) {
@@ -26,6 +33,16 @@ function assertOk(css) {
 }
 
 describe('validate functions', function() {
+    it('validate() should take AST', () => {
+        const ast = parse('.a {\n  foo: 123;\n}', { positions: true });
+
+        assertError(
+            ast,
+            { offset: 7, line: 2, column: 3 },
+            'Unknown property `foo`'
+        );
+    });
+
     describe('declaration', () => {
         it('unknown property', () =>
             assertError(
