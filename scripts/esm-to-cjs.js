@@ -6,6 +6,7 @@ const external = [
     'fs',
     'path',
     'assert',
+    'child_process',
     'clap',
     'css-tree',
     'csstree-validator'

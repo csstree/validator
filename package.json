@@ -39,7 +39,7 @@
     "prepublishOnly": "npm run lint-and-test && npm run build-and-test"
   },
   "dependencies": {
-    "clap": "^1.1.1",
+    "clap": "^3.0.0",
     "css-tree": "^2.0.2"
   },
   "devDependencies": {

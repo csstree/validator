@@ -1,0 +1,6 @@
+# fixtures/css/style.css
+    * Unknown property `unknown`
+    * Invalid value for `color` property
+      syntax: <color>
+       value: bad
+      --------^
