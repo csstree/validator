@@ -62,6 +62,7 @@
   },
   "files": [
     "bin",
+    "cjs",
     "dist",
     "lib"
   ]
