@@ -23,6 +23,8 @@
     },
     "./package.json": "./package.json"
   },
+  "unpkg": "dist/csstree-validator.esm.js",
+  "jsdelivr": "dist/csstree-validator.esm.js",
   "scripts": {
     "lint-and-test": "npm run lint && npm test",
     "lint": "eslint lib test",
