@@ -97,7 +97,7 @@ describe('custom reporter', () => {
         // module
         'ESM module': 'custom-reporter.js',
         'commonjs module': 'custom-reporter.cjs',
-    
+
         // package
         'commonjs package': 'commonjs',
         'commonjs package (path to dir)': 'commonjs/lib',
@@ -107,7 +107,7 @@ describe('custom reporter', () => {
         'dual package': 'dual',
         'dual package (full path)': 'dual/lib/index.js',
         'dual package (full path to cjs)': 'dual/lib/index.cjs'
-    }
+    };
 
     for (const [title, reporter] of Object.entries(tests)) {
         it(title, () =>
