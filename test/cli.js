@@ -1,9 +1,10 @@
-import assert, { equal, deepStrictEqual } from 'assert';
+import assert, { deepStrictEqual, strictEqual } from 'assert';
 import path from 'path';
 import { readFileSync } from 'fs';
 import { spawn } from 'child_process';
 
 const { version } = JSON.parse(readFileSync('./package.json'));
+const cmd = path.resolve('./bin/validate.js');
 
 function fixturePath(filepath) {
     return path.join(path.resolve('fixtures'), filepath);
@@ -17,7 +18,7 @@ function assertOutput(actual, expected) {
     if (typeof expected === 'function') {
         expected(actual.trim());
     } else if (typeof expected === 'string') {
-        equal(actual.trim(), expected);
+        strictEqual(actual.trim(), expected);
     } else if (expected instanceof RegExp) {
         assert.match(actual.trim(), expected);
     } else {
@@ -28,8 +29,9 @@ function assertOutput(actual, expected) {
 function run(...cliArgs) {
     let stderr = '';
     let stdout = '';
-    const args = ['./bin/validate.js', ...cliArgs];
-    const child = spawn('node', args, { stdio: 'pipe' });
+    const options = typeof cliArgs[0] === 'object' ? cliArgs.shift() : null;
+    const args = [cmd, ...cliArgs];
+    const child = spawn('node', args, { stdio: 'pipe', ...options });
     const wrapper = new Promise((resolve, reject) => {
         child.once('close', (code) =>
             code > 1 ? reject(new Error(stderr)) : resolve({ stdout, stderr })
@@ -45,13 +47,13 @@ function run(...cliArgs) {
         return wrapper;
     };
     wrapper.stdout = expected =>
-        wrapper.then(({ stdout: actual }) =>
+        Object.assign(wrapper.then(({ stdout: actual }) =>
             assertOutput(actual, expected)
-        );
+        ), { stderr: wrapper.stderr });
     wrapper.stderr = expected =>
-        wrapper.then(({ stderr: actual }) =>
+        Object.assign(wrapper.then(({ stderr: actual }) =>
             assertOutput(actual, expected)
-        );
+        ), { stdout: wrapper.stdout });
 
     return wrapper;
 }
@@ -88,3 +90,29 @@ it('should error when file doesn\'t exist', () =>
     run('not/exists.css')
         .stderr('ERROR! No such file or directory: not/exists.css')
 );
+
+describe('custom reporter', () => {
+    const cwd = path.resolve('fixtures/custom-reporter');
+    const tests = {
+        // module
+        'ESM module': 'custom-reporter.js',
+        'commonjs module': 'custom-reporter.cjs',
+    
+        // package
+        'commonjs package': 'commonjs',
+        'commonjs package (path to dir)': 'commonjs/lib',
+        'commonjs package (full path)': 'commonjs/lib/index.js',
+        'esm package': 'esm',
+        'esm package (full path)': 'esm/lib/index.js',
+        'dual package': 'dual',
+        'dual package (full path)': 'dual/lib/index.js',
+        'dual package (full path to cjs)': 'dual/lib/index.cjs'
+    }
+
+    for (const [title, reporter] of Object.entries(tests)) {
+        it(title, () =>
+            run({ cwd }, 'style.css', '-r', reporter)
+                .stderr('OK')
+        );
+    }
+});
