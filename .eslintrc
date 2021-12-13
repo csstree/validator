@@ -62,7 +62,8 @@
             2,
             {
                 "words": false,
-                "nonwords": false
+                "nonwords": false,
+                "yeild": false
             }
         ],
         "no-spaced-func": 2,

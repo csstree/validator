@@ -1,5 +1,6 @@
 ## next
 
+- Added `Symbol.iterator` for `validateString()`, `validateDictionary()`, `validateFile()`, `validatePathList()` and `validatePath()` result value, i.e. it now can be used with `for ... of` for example `for (const [filename, errors] of result) ...`
 - Bumped `csstree` to [2.0](https://github.com/csstree/csstree/releases/tag/v2.0.0)
 - Package
     - Changed supported versions of Node.js to `^12.20.0`, `^14.13.0` and `>=15.0.0`

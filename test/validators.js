@@ -168,8 +168,8 @@ describe('validators', () => {
             ]);
 
             deepStrictEqual(Object.keys(errors), [
-                path.join(validPath, 'style.css'),
-                String(invalidPath)
+                String(invalidPath),
+                path.join(validPath, 'style.css')
             ]);
             strictEqual(errors[path.join(validPath, 'style.css')].length, 2);
             strictEqual(errors[invalidPath].length, 1);
