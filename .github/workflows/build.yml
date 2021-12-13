@@ -6,6 +6,7 @@ on:
 
 env:
     PRIMARY_NODEJS_VERSION: 16
+    REPORTER: "min"
 
 jobs:
     lint:
@@ -57,11 +58,7 @@ jobs:
                 cache: "npm"
             - run: npm ci
             - run: npm run test
-              env:
-                REPORTER: "min"
             - run: npm run esm-to-cjs-and-test
-              env:
-                REPORTER: "min"
 
             - run: npm run coverage
               if: ${{ matrix.node_version == env.PRIMARY_NODEJS_VERSION }}
