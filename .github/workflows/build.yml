@@ -9,6 +9,7 @@ env:
 
 jobs:
     lint:
+        name: Lint
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -21,6 +22,7 @@ jobs:
             - run: npm run lint
 
     test-bundle:
+        name: Test bundle
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -35,6 +37,7 @@ jobs:
                 REPORTER: "min"
 
     run-tests:
+        name: Unit tests
         runs-on: ubuntu-latest
 
         strategy:
@@ -71,9 +74,9 @@ jobs:
                 parallel: true
 
     send-to-coveralls:
+        name: Send coverage to Coveralls
         needs: run-tests
         runs-on: ubuntu-latest
-        name: Send coverage to Coveralls
         steps:
             - name: Send coverage to Coveralls
               uses: coverallsapp/github-action@1.1.3
