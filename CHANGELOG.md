@@ -1,4 +1,4 @@
-## next
+## 3.0.0 (December 13, 2021)
 
 - Added custom reporters support in CLI, e.g. `csstree-validator --reporter path/to/reporter.js` or `csstree-validator --reporter reporter-package`
 - Added `Symbol.iterator` for `validateString()`, `validateDictionary()`, `validateFile()`, `validatePathList()` and `validatePath()` result value, i.e. it now can be used with `for ... of` for example `for (const [filename, errors] of result) ...`
