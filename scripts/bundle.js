@@ -10,7 +10,7 @@ async function build() {
         [path.resolve('lib/version.js')]: `export const version = "${version}";`,
         [path.resolve('lib/version.cjs')]: `module.exports = "${version}";`
     };
-    const genModulesFilter = new RegExp('(' + Object.keys(genModules).join('|').replace(/\./g, '\\.') + ')$');
+    const genModulesFilter = new RegExp('(' + Object.keys(genModules).join('|').replace(/\./g, '\\.').replace(/\\/g, '\\\\') + ')$');
     const plugins = [{
         name: 'replace',
         setup({ onLoad }) {
