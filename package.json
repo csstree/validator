@@ -47,7 +47,7 @@
   "dependencies": {
     "clap": "^3.0.0",
     "css-tree": "^2.0.2",
-    "resolve": "^1.20.0"
+    "enhanced-resolve": "^5.16.0"
   },
   "devDependencies": {
     "c8": "^7.10.0",
