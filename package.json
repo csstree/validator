@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "clap": "^3.0.0",
-    "css-tree": "^2.0.2",
+    "css-tree": "^3.0.0",
     "resolve": "^1.20.0"
   },
   "devDependencies": {
