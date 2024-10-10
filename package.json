@@ -27,7 +27,6 @@
   "unpkg": "dist/csstree-validator.esm.js",
   "jsdelivr": "dist/csstree-validator.esm.js",
   "browser": {
-    "path": false,
     "./cjs/version.cjs": "./dist/version.cjs",
     "./lib/version.js": "./dist/version.js"
   },

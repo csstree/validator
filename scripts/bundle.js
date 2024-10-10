@@ -7,10 +7,10 @@ const { version } = createRequire(import.meta.url)('../package.json');
 
 async function build() {
     const genModules = {
-        [path.resolve('lib/version.js')]: `export const version = "${version}";`,
-        [path.resolve('lib/version.cjs')]: `module.exports = "${version}";`
+        'version.js': `export const version = "${version}";`,
+        'version.cjs': `module.exports = "${version}";`
     };
-    const genModulesFilter = new RegExp('(' + Object.keys(genModules).join('|').replace(/\./g, '\\.').replace(/\\/g, '\\\\') + ')$');
+    const genModulesFilter = new RegExp('lib[\\\\/](' + Object.keys(genModules).join('|').replace(/\./g, '\\.') + ')$');
     const plugins = [{
         name: 'replace',
         setup({ onLoad }) {
