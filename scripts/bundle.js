@@ -8,7 +8,7 @@ const { version } = createRequire(import.meta.url)('../package.json');
 async function build() {
     const genModules = {
         'version.js': `export const version = "${version}";`,
-        'version.cjs': `module.exports = "${version}";`
+        'version.cjs': `exports.version = "${version}";`
     };
     const genModulesFilter = new RegExp('lib[\\\\/](' + Object.keys(genModules).join('|').replace(/\./g, '\\.') + ')$');
     const plugins = [{
@@ -22,7 +22,7 @@ async function build() {
 
     await Promise.all([
         esbuild.build({
-            entryPoints: ['lib/validate.js'],
+            entryPoints: ['lib/bundle.js'],
             outfile: 'dist/csstree-validator.js',
             format: 'iife',
             globalName: 'csstreeValidator',
@@ -33,7 +33,7 @@ async function build() {
         }),
 
         esbuild.build({
-            entryPoints: ['lib/validate.js'],
+            entryPoints: ['lib/bundle.js'],
             outfile: 'dist/csstree-validator.esm.js',
             format: 'esm',
             bundle: true,

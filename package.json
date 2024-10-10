@@ -19,6 +19,10 @@
   "module": "./lib/index.js",
   "exports": {
     ".": {
+      "browser": {
+        "import": "./lib/bundle.js",
+        "require": "./cjs/bundle.cjs"
+      },
       "import": "./lib/index.js",
       "require": "./cjs/index.cjs"
     },
@@ -27,6 +31,8 @@
   "unpkg": "dist/csstree-validator.esm.js",
   "jsdelivr": "dist/csstree-validator.esm.js",
   "browser": {
+    "./cjs/index.cjs": "./cjs/bundle.cjs",
+    "./lib/index.js": "./lib/bundle.js",
     "./cjs/version.cjs": "./dist/version.cjs",
     "./lib/version.js": "./dist/version.js"
   },
