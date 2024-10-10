@@ -1,28 +1,41 @@
-[![NPM version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
+[![NPM Version](https://img.shields.io/npm/v/csstree-validator.svg)](https://www.npmjs.com/package/csstree-validator)
 [![Build Status](https://github.com/csstree/validator/actions/workflows/build.yml/badge.svg)](https://github.com/csstree/validator/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/csstree/validator/badge.svg?branch=master)](https://coveralls.io/github/csstree/validator?branch=master)
 
 # CSSTree Validator
 
-CSS validator built on [CSSTree](https://github.com/csstree/csstree)
+# CSSTree Validator
+
+CSS Validator built on [CSSTree](https://github.com/csstree/csstree).
+
+Technically, the package utilizes the capabilities of CSSTree to match CSS syntaxes to various parts of your code and generates a list of errors, if any.
+
+> **Note:** If `csstree-validator` produces false positives or false negatives, such as unknown properties or invalid values for a property, please report the issue to the [CSSTree issue tracker](https://github.com/csstree/csstree/issues).
+
+> **Note:** CSSTree currently doesn't support selector syntax matching; therefore, `csstree-validator` doesn't support it either. Support for selector validation will be added once it is available in CSSTree.
+
+## Installation
+
+Install the package via npm:
+
+```bash
+npm install csstree-validator
+```
 
 ## Usage
 
-```bash
-> npm install csstree-validator
-```
-
-Validate CSS string or [CSSTree's AST](https://github.com/csstree/csstree/blob/master/docs/ast.md):
+You can validate a CSS string or a [CSSTree AST](https://github.com/csstree/csstree/blob/master/docs/ast.md):
 
 ```js
 import { validate } from 'csstree-validator';
-// Commonjs:
+// For CommonJS:
 // const { validate } = require('csstree-validator');
 
 const filename = 'demo/example.css';
 const css = '.class { pading: 10px; border: 1px super red }';
 
 console.log(validate(css, filename));
+// Output:
 // [
 //   SyntaxError [SyntaxReferenceError]: Unknown property `pading` {
 //     reference: 'pading',
@@ -51,97 +64,168 @@ console.log(validate(css, filename));
 // ]
 ```
 
-Another option is to use helpers to validate a file or a directory and one of buildin reporters:
+Alternatively, you can use [helper functions](#helpers) to validate a file or directory and utilize one of the built-in [reporters](#reporters):
 
 ```js
 import { validateFile, reporters } from 'csstree-validator';
 
-console.log(reporters.checkstyle(validateFile('./path/to/style.css')));
+const result = validateFile('./path/to/style.css');
+console.log(reporters.checkstyle(result));
 ```
 
-### Validate methods
+### Validation Methods
 
-* validate(css, filename)
-* validateAtrule(node)
-* validateAtrulePrelude(atrule, prelude, preludeLoc)
-* validateAtruleDescriptor(atrule, descriptor, value, descriptorLoc)
-* validateDeclaration(property, value, valueLoc)
-* validateRule(node)
+- `validate(css, filename)`
+- `validateAtrule(node)`
+- `validateAtrulePrelude(atrule, prelude, preludeLoc)`
+- `validateAtruleDescriptor(atrule, descriptor, value, descriptorLoc)`
+- `validateDeclaration(property, value, valueLoc)`
+- `validateRule(node)`
 
 ## Helpers
 
-All helper function return an object where key is a path to a file and value is an array of errors. The result object is iterable (has `Symbol.iterator`) and can be used with `for ... of` or `...` operator.
+> **Note:** Helpers are not available in browser environments as they rely on Node.js APIs.
+
+All helper functions return an object where the key is the path to a file and the value is an array of errors. The result object is iterable (has `Symbol.iterator`) and can be used with `for...of` loops or the spread operator.
+
+Example:
 
 ```js
 const result = validateFile('path/to/file.css');
 
 for (const [filename, errors] of result) {
-  // ...
+  // Process errors
 }
 ```
 
-* validateString(css, filename)
-* validateDictionary(dictionary)
-* validateFile(filename)
-* validatePath(searchPath, filter)
-* validatePathList(pathList, filter)
+Available helper functions:
 
-Reporters:
+- `validateString(css, filename)`
+- `validateDictionary(dictionary)`
+- `validateFile(filename)`
+- `validatePath(searchPath, filter)`
+- `validatePathList(pathList, filter)`
 
-* `json`
-* `console`
-* `checkstyle`
-* `gnu`
+## Reporters
 
-## Using in a browser
+CSSTree Validator provides several built-in reporters to convert validation results into different formats:
 
-Available bundles to use in a browser:
+- **console** – Human-readable text suitable for console output.
+- **json** – Converts errors into a unified JSON array of objects:
 
-- `dist/csstree-validator.js` – minified IIFE with `csstreeValidator` as a global
-```html
-<script src="node_modules/csstree-validator/dist/csstree-validator.js"></script>
-<script>
-  const errors = csstreeValidator.validate('.some { css: source }');
-</script>
+  ```ts
+  type ErrorEntry = {
+    name: string; // Filename
+    line: number;
+    column: number;
+    atrule?: string;
+    descriptor?: string;
+    property?: string;
+    message: string;
+    details?: any;
+  }
+  ```
+
+- **checkstyle** – [Checkstyle](https://checkstyle.sourceforge.io/) XML report format:
+
+  ```xml
+  <?xml version="1.0" encoding="utf-8"?>
+  <checkstyle version="4.3">
+    <file name="{filename}">
+      <error line="{line}" column="{column}" severity="error" message="{message}" source="csstree-validator" />
+    </file>
+  </checkstyle>
+  ```
+
+- **gnu** – GNU error log format:
+
+  ```
+  "FILENAME":LINE.COLUMN: error: MESSAGE
+  "FILENAME":START_LINE.COLUMN-END_LINE.COLUMN: error: MESSAGE
+  ```
+
+Example usage:
+
+```js
+import { validate, reporters } from 'csstree-validator';
+
+const css = '.class { padding: 10px; color: red; }';
+const result = validate(css, 'example.css');
+
+console.log(reporters.json(result));
+// Output:
+// [
+//   { "name": 'example.css', ... },
+//   { "name": 'example.css', ... },
+//   ...
+// ]
 ```
 
-- `dist/csstree-validator.esm.js` – minified ES module
-```html
-<script type="module">
-  import { validate } from "csstree-validator/dist/csstree-validator.esm.js";
+## Browser Usage
 
-  const errors = validate('.some { css: source }');
-</script>
-```
+CSSTree Validator can be used in browser environments using the available bundles:
 
-One of CDN services like `unpkg` or `jsDelivr` can be used. By default (for short path) a ESM version is exposing. For IIFE version a full path to a bundle should be specified:
+- **IIFE Bundle (`dist/csstree-validator.js`)** – Minified IIFE with `csstreeValidator` as a global variable.
+
+  ```html
+  <script src="node_modules/csstree-validator/dist/csstree-validator.js"></script>
+  <script>
+    const errors = csstreeValidator.validate('.some { css: source }');
+  </script>
+  ```
+
+- **ES Module (`dist/csstree-validator.esm.js`)** – Minified ES module.
+
+  ```html
+  <script type="module">
+    import { validate } from 'csstree-validator/dist/csstree-validator.esm.js';
+
+    const errors = validate('.some { css: source }');
+  </script>
+  ```
+
+You can also use a CDN service like `unpkg` or `jsDelivr`. By default, the ESM version is exposed for short paths. For the IIFE version, specify the full path to the bundle:
 
 ```html
 <!-- ESM -->
 <script type="module">
   import * as csstreeValidator from 'https://cdn.jsdelivr.net/npm/csstree-validator';
+  // or
   import * as csstreeValidator from 'https://unpkg.com/csstree-validator';
 </script>
 
 <!-- IIFE with csstreeValidator as a global -->
 <script src="https://cdn.jsdelivr.net/npm/csstree-validator/dist/csstree-validator.js"></script>
+<!-- or -->
 <script src="https://unpkg.com/csstree-validator/dist/csstree-validator.js"></script>
 ```
 
-NOTE: Helpers and reporters are not available for browser's version.
+**Note:** Helpers are not available in the browser version.
 
-## CLI (terminal command)
+## Command-Line Interface (CLI)
+
+Install globally via npm:
 
 ```bash
-> npm install -g csstree-validator
-> csstree-validator /path/to/style.css
+npm install -g csstree-validator
+```
+
+Run the validator on a CSS file:
+
+```bash
+csstree-validator /path/to/style.css
+```
+
+Display help:
+
+```bash
+csstree-validator -h
 ```
 
 ```
-> csstree-validator -h
 Usage:
 
-    csstree-validate [fileOrDir] [options]
+    csstree-validator [fileOrDir] [options]
 
 Options:
 
@@ -151,16 +235,16 @@ Options:
     -v, --version                  Output version
 ```
 
-### Custom reporters
+### Custom Reporters
 
-In addition to predefined (buildin) reporters, you can specify the path to a module or a package with a custom reporter. Such module should export a single function which takes the validation result object and returns a string:
+In addition to the built-in reporters, you can specify a custom reporter by providing the path to a module or package. The module should export a single function that takes the validation result object and returns a string:
 
 ```js
 export default function(result) {
-  const output = '';
+  let output = '';
 
   for (const [filename, errors] of result) {
-    // ...
+    // Generate custom output
   }
 
   return output;
@@ -170,27 +254,25 @@ export default function(result) {
 // module.exports = function(result) { ... }
 ```
 
-The specifier for a custom reporter might be:
-- ESM module – a full path to a file with `.js` extension
-- CommonJS module – a full path to a file with `.cjs` extension
-- ESM package – a package name or a full path to package's module (i.e. `package/lib/index.js`)
-- CommonJS package – a package name or a path to package's module (i.e. `package/lib/index.js`, `package/lib/index` or `package/lib`)
-- Dual package – a package name or a full path to package's module
+The `reporter` option accepts:
 
-The resolution algorithm is testing `reporter` option value in the following order:
-- If a value is a path to a file (a base dir for relative paths is `process.cwd()`), then use it a module
-- If a value is a path to a package module (a base dir for `node_modules` is `process.cwd()`), then use package's module
-- Otherwise the value should be a name of one of predifined reporter, or an error will be raised
+- **ESM Module** – Full path to a file with a `.js` extension.
+- **CommonJS Module** – Full path to a file with a `.cjs` extension.
+- **ESM Package** – Package name or full path to a module within the package.
+- **CommonJS Package** – Package name or path to a module within the package.
+- **Dual Package** – Package name or full path to a module within the package.
 
-## Ready to use
+The resolution algorithm checks the `reporter` value in the following order:
 
-Plugins that are using `csstree-validator`:
+1. If it's a path to a file (relative to `process.cwd()`), use it as a module.
+2. If it's a path to a package module (relative to `process.cwd()`), use the package's module.
+3. Otherwise, the value should be the name of one of the predefined reporters, or an error will be raised.
 
-* [Sublime plugin](https://github.com/csstree/SublimeLinter-contrib-csstree)
-* [VS Code plugin](https://github.com/csstree/vscode-plugin)
-* [Atom plugin](https://github.com/csstree/atom-plugin)
-* [Grunt plugin](https://github.com/sergejmueller/grunt-csstree-validator)
-* [Gulp plugin](https://github.com/csstree/gulp-csstree)
+## Integrations
+
+Plugins that use `csstree-validator`:
+
+- [VS Code Plugin](https://github.com/csstree/vscode-plugin)
 
 ## License
 
