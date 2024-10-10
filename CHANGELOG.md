@@ -1,4 +1,4 @@
-## next
+## 4.0.0 (October 10, 2024)
 
 - Bumped `csstree` to [^3.0.0](https://github.com/csstree/csstree/releases/tag/v3.0.0)
 - Added default reporters into bundle entry points
