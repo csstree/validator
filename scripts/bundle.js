@@ -15,7 +15,7 @@ async function build() {
         name: 'replace',
         setup({ onLoad }) {
             onLoad({ filter: genModulesFilter }, args => ({
-                contents: genModules[args.path]
+                contents: genModules[path.basename(args.path)]
             }));
         }
     }];
