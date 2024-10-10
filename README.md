@@ -4,8 +4,6 @@
 
 # CSSTree Validator
 
-# CSSTree Validator
-
 CSS Validator built on [CSSTree](https://github.com/csstree/csstree).
 
 Technically, the package utilizes the capabilities of CSSTree to match CSS syntaxes to various parts of your code and generates a list of errors, if any.
@@ -110,8 +108,8 @@ Available helper functions:
 
 CSSTree Validator provides several built-in reporters to convert validation results into different formats:
 
-- **console** – Human-readable text suitable for console output.
-- **json** – Converts errors into a unified JSON array of objects:
+- `console` – Human-readable text suitable for console output.
+- `json` – Converts errors into a unified JSON array of objects:
 
   ```ts
   type ErrorEntry = {
@@ -126,7 +124,7 @@ CSSTree Validator provides several built-in reporters to convert validation resu
   }
   ```
 
-- **checkstyle** – [Checkstyle](https://checkstyle.sourceforge.io/) XML report format:
+- `checkstyle` – [Checkstyle](https://checkstyle.sourceforge.io/) XML report format:
 
   ```xml
   <?xml version="1.0" encoding="utf-8"?>
@@ -137,7 +135,7 @@ CSSTree Validator provides several built-in reporters to convert validation resu
   </checkstyle>
   ```
 
-- **gnu** – GNU error log format:
+- `gnu` – GNU error log format:
 
   ```
   "FILENAME":LINE.COLUMN: error: MESSAGE
