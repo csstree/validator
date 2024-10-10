@@ -1,3 +1,7 @@
+## next
+
+- Bumped `csstree` to [^3.0.0](https://github.com/csstree/csstree/releases/tag/v3.0.0)
+
 ## 3.0.0 (December 13, 2021)
 
 - Added custom reporters support in CLI, e.g. `csstree-validator --reporter path/to/reporter.js` or `csstree-validator --reporter reporter-package`
