@@ -1,6 +1,7 @@
 ## next
 
 - Bumped `csstree` to [^3.0.0](https://github.com/csstree/csstree/releases/tag/v3.0.0)
+- Added default reporters into bundle entry points
 - Fixed the resolution of a path to a reporter by employing `enhanced-resolve`, which now considers the `exports` field in `package.json`
 
 ## 3.0.0 (December 13, 2021)
