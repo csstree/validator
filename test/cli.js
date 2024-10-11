@@ -58,61 +58,63 @@ function run(...cliArgs) {
     return wrapper;
 }
 
-it('should output version', () =>
-    run('-v')
-        .stdout(version)
-);
+describe('cli', () => {
+    it('should output version', () =>
+        run('-v')
+            .stdout(version)
+    );
 
-it('should output help', () =>
-    run('-h')
-        .stdout(/Usage:/)
-);
+    it('should output help', () =>
+        run('-h')
+            .stdout(/Usage:/)
+    );
 
-it('should read content from stdin if no file specified', () =>
-    run()
-        .stdin(fixtureContent('css/style.css'))
-        .stderr(fixtureContent('css/style.validate-result')
-            .replace(/^#.+\n/, '# <stdin>\n')
-        )
-);
+    it('should read content from stdin if no file specified', () =>
+        run()
+            .stdin(fixtureContent('css/style.css'))
+            .stderr(fixtureContent('css/style.validate-result')
+                .replace(/^#.+\n/, '# <stdin>\n')
+            )
+    );
 
-it('should read from file', () =>
-    run(path.relative(process.cwd(), fixturePath('css/style.css')))
-        .stderr(fixtureContent('css/style.validate-result'))
-);
+    it('should read from file', () =>
+        run(path.relative(process.cwd(), fixturePath('css/style.css')))
+            .stderr(fixtureContent('css/style.validate-result'))
+    );
 
-it('should error when wrong reporter', () =>
-    run(path.relative(process.cwd(), fixturePath('css/style.css')), '--reporter', 'bad-value')
-        .stderr('Wrong value for reporter: bad-value')
-);
+    it('should error when wrong reporter', () =>
+        run(path.relative(process.cwd(), fixturePath('css/style.css')), '--reporter', 'bad-value')
+            .stderr('Wrong value for reporter: bad-value')
+    );
 
-it('should error when file doesn\'t exist', () =>
-    run('not/exists.css')
-        .stderr('ERROR! No such file or directory: not/exists.css')
-);
+    it('should error when file doesn\'t exist', () =>
+        run('not/exists.css')
+            .stderr('ERROR! No such file or directory: not/exists.css')
+    );
 
-describe('custom reporter', () => {
-    const cwd = path.resolve('fixtures/custom-reporter');
-    const tests = {
-        // module
-        'ESM module': 'custom-reporter.js',
-        'commonjs module': 'custom-reporter.cjs',
+    describe('custom reporter', () => {
+        const cwd = path.resolve('fixtures/custom-reporter');
+        const tests = {
+            // module
+            'ESM module': 'custom-reporter.js',
+            'commonjs module': 'custom-reporter.cjs',
 
-        // package
-        'commonjs package': 'commonjs',
-        'commonjs package (path to dir)': 'commonjs/lib',
-        'commonjs package (full path)': 'commonjs/lib/index.js',
-        'esm package': 'esm',
-        'esm package (full path)': 'esm/lib/index.js',
-        'dual package': 'dual',
-        'dual package (full path)': 'dual/lib/index.js',
-        'dual package (full path to cjs)': 'dual/lib/index.cjs'
-    };
+            // package
+            'commonjs package': 'commonjs',
+            'commonjs package (path to dir)': 'commonjs/lib',
+            'commonjs package (full path)': 'commonjs/lib/index.js',
+            'esm package': 'esm',
+            'esm package (full path)': 'esm/lib/index.js',
+            'dual package': 'dual',
+            'dual package (full path)': 'dual/lib/index.js',
+            'dual package (full path to cjs)': 'dual/lib/index.cjs'
+        };
 
-    for (const [title, reporter] of Object.entries(tests)) {
-        it(title, () =>
-            run({ cwd }, 'style.css', '-r', reporter)
-                .stderr('OK')
-        );
-    }
+        for (const [title, reporter] of Object.entries(tests)) {
+            it(title, () =>
+                run({ cwd }, 'style.css', '-r', reporter)
+                    .stderr('OK')
+            );
+        }
+    });
 });
