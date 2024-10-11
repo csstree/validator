@@ -1,5 +1,5 @@
 "match.css":1.16-1.19: error: Invalid value for `color` property: `123`; allowed: <color>
 "match.css":1.33-1.40: error: Invalid value for `border` property: `1px unknown red`; allowed: <line-width> || <line-style> || <color>
-"match.css":1.46: error: Unknown property `unknown`
+"match.css":1.46-1.53: error: Unknown property `unknown`
 "parse.css":1.11: error: Colon is expected
 "parse.css":1.32-1.37: error: Invalid value for `color` property: `red green`; allowed: <color>
