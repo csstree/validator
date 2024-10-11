@@ -8,6 +8,7 @@ const external = [
     'assert',
     'child_process',
     'clap',
+    'enhanced-resolve',
     'css-tree',
     'csstree-validator'
 ];
