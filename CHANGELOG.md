@@ -1,6 +1,6 @@
-## next
+## 4.0.1 (October 11, 2024)
 
-- Uniformed location properties on validation errors; all errors (excluding parse errors) now include `offset`, `start`, `end`, and `loc` properties
+- Fixed location properties on validation errors; all errors (excluding parse errors) now include `offset`, `start`, `end`, and `loc` properties
 
 ## 4.0.0 (October 10, 2024)
 
